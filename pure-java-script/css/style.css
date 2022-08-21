@@ -1,0 +1,298 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    max-width: 100vw;
+    font-family: 'Poppins';
+}
+
+.container-1 {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    background: transparent linear-gradient(180deg, #9D0E0E00 0%, #4F0707 100%) 0% 0% no-repeat padding-box;
+}
+
+.header-image {
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;    
+}
+
+.header-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.nav-bar {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    /* border: solid 1px forestgreen; */
+}
+
+.nav-bar a {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    font-size: 25px;
+    font-size: 18px;
+}
+
+.nav-bar .button-1 {
+    margin: 0 85px 0 26px;
+    padding: 5px 10px;
+    border: solid 1px #fff;
+    border-radius: 5px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.circle {
+    background-color: #fff;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.circle p {
+    font-size: 65px;
+    padding-bottom: 3px;
+    font-weight: bold;
+    color: rgb(235, 41, 41);
+}
+
+.heading-1 {
+    color: #fff;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.heading-1 h1 {
+    font-size: 36px;
+}
+
+.typeIn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.typeIn input {
+    padding: 15px;
+    font-size: 16px;
+    height: 55px;
+    margin: 0 10px;
+}
+
+.input-1 {
+    width: 220px;
+}
+
+.input-2 {
+    width: 510px;
+}
+
+.container-2 {
+    padding: 0 8.27%;
+    margin-top: 48px;
+    display:flex;
+    flex-direction: column;
+}
+
+.container-2 h1 {
+    margin: 0;   
+    font: normal normal bold 30px/46px Poppins;
+    letter-spacing: 0px;
+    color: #192F60;
+}
+
+.container-2 p {
+    margin: 0; 
+    font: normal normal normal 18px/27px Poppins;
+    letter-spacing: 0px;
+    color: #8C96AB;
+}
+
+.container-3 {
+    margin: 0 0 100px 0;
+    padding: 0;
+}
+
+.row {
+    margin-top: 26px ;
+    width: 100%;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.row a {
+    text-decoration: none;
+}
+
+.col {
+    width: 360px;
+    overflow: hidden;
+    display: flex;
+    margin-right: 26px;
+    align-items: center;
+    justify-content:space-between;
+    box-shadow: 0px 3px 6px #00000029;
+}
+
+.lastCol {
+    margin-right: 0;
+}
+
+.col-item1 {
+    width: 160px;
+    height: 160px;
+    overflow: hidden;
+}
+
+.col-item1 img {
+    display: block;
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+}
+
+.col-item2 {
+    width: 200px;
+    height: 160px;
+    padding: 25px 33px 0 29px;
+}
+
+.col-item2 h3 {
+    margin: 0;
+    font: normal normal 600 18px/27px Poppins;
+    letter-spacing: 0px;
+    color: #192F60;
+}
+
+.col-item2 p {
+    margin: 0;
+    font: normal normal normal 14px/21px Poppins;
+    letter-spacing: 0px;
+    color: #8C96AB;
+}
+
+
+@media screen and (min-width:778px) and (max-width:1100px){
+    .circle {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .circle p {
+        font-size: 55px;
+    }
+
+    .lastCol {
+        display: none;
+    } 
+    
+    .secCol {
+        margin-right: 0;
+    }
+}
+
+@media screen and (max-width:777px){
+    
+    .nav-bar {
+        display: none;
+    }
+
+    .logo {
+        margin-top: 59px;
+    }
+    
+    .circle {
+        width: 90px;
+        height: 90px;
+    }
+    
+    .circle p {
+        font-size: 42px;
+    }
+
+    .heading-1 h1 {
+        font-size: 28px;
+    }
+
+    .typeIn form{
+        width: 100%;
+        padding: 0 37px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .typeIn form input {
+        display: inline-block;
+        margin: 0;
+        margin-bottom: 20px;
+    }
+
+    .input-1 {
+        width: 100%;
+    }
+    
+    .input-2 {
+        width: 100%;
+    }
+
+    .row {
+        flex-direction: column;
+        height: auto;
+    } 
+    .col {
+        margin-right: 0;
+        margin-top: 26px;
+    } 
+   
+    .secRow {
+        display: none;
+    }
+    
+}
+
+
+#addForm{
+    border: solid 1px #ccc;
+    padding: 10px;
+    box-shadow: 0px 3px 6px #00000029;
+    background-color: yellow;
+}
+
+#addForm div{
+    border: solid 1px #ccc;
+    padding: 10px;
+    box-shadow: 0px 3px 6px #00000029;
+
+}

@@ -1,0 +1,306 @@
+* {
+    box-sizing: border-box;
+}
+
+body  {
+    margin: 0;
+    padding: 0;
+    /* width: 1366px;
+    height: 973px; */
+    background: #FBFBFB 0% 0% no-repeat padding-box;
+}
+
+
+/* Navigation bar*/
+.navbar {
+    background-color: #ce0505;
+    position: relative;
+}
+
+.navbar-brand {
+    margin-left: 7vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 255, 255);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.navbar-brand:hover {
+    cursor:pointer;
+}
+
+.navbar-brand p {
+    margin-top: 10px;
+    font-size: 35px;
+    font-weight: bold;
+    color: #ce0505;
+}
+
+.d-flex {
+    margin-right: 6vw;
+}
+
+.d-flex a {
+    text-decoration: none; 
+    color: #fff;
+    font-size: 16px;
+    padding:10px 30px 10px 10px;
+}
+
+.d-flex .btn {
+    width: 181px;
+    height: 46px;
+    font-size: 16px;
+} 
+
+.viewAtSm {
+    display: none;
+}
+
+
+/* Main Heading */
+.firstHeading {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.firstHeading h1 {
+    font-weight: 750; 
+    color: #192f60;
+}
+
+
+/* Filter column */
+.leftColumn {
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.161);
+    margin-right: 3.3%;
+    padding: 30px;
+    color: rgb(25, 47, 96);
+}
+
+.leftColumn p {
+    margin-top: 25px;
+    color: rgb(25, 47, 96);
+}
+
+.form-control {
+    margin-top: -5px;
+}
+
+.cuisine, .costForTwo, .sortBlock {
+    color: rgb(140, 150, 171);
+}
+
+.sort {
+    font-weight: bold; 
+    color: #192f60;
+    margin-top: 25px;
+}
+
+
+/* Cards */
+.rightColumn .rightColRow {
+    margin-bottom: 30px;
+    padding: 25px 32.6px 15px 35px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.161);
+}
+
+/* .rightColumn .rowOne, .rowTwo, .columnOne, .columnTwo {
+    padding: 0;
+    margin: 0;
+} */
+
+hr {
+    margin-top: 20px !important;
+}
+
+.columnTwo {
+    margin-left: -25px;
+}
+
+.rightColumn img {
+    width: 120px;
+    height: 120px;
+    border-radius: 20px;
+}
+
+.rightColumn .rowOne .columnTwo h3 {
+    font-size: 30px;
+}
+
+.rightColumn .rowOne .columnTwo h3, h6{
+    color: #192f60;
+}
+
+.rightColumn .rowOne .columnTwo p {
+    color: rgb(140, 150, 171);
+}
+
+.rightColumn .rowTwo .columnOne p {
+    color: rgb(140, 150, 171);
+}
+
+.rightColumn .rowTwo .columnTwo {
+    font-weight: 600;
+    color: #192f60;
+}
+
+.rightCol3Row ul{
+    display: flex;
+    justify-content: center;
+}
+
+.rightCol3Row .page-item {
+    margin-left: 10px;
+}
+
+.rightCol3Row .page-item a, span {
+    padding: 3px;
+    width: 35px;
+    height: 35px;
+    color: rgba(25, 47, 96, 0.5);
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 8px;
+}
+
+@media screen and (max-width: 770px) {
+    .leftColumn {
+        display: none;
+    }
+
+    .dropdown, .viewAtSm {
+        display: block;
+    }
+
+    .dropdown {
+        position: relative;
+        margin: 25px 10px;
+        padding: 18px 0 12px 12px ;
+        display: block;
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.161);
+    }
+
+    .dropdown h3 {
+        letter-spacing: 2px;
+        color:#192f60;
+    }
+
+    .dropdown span {
+        transform: scaleY(-1);
+        position: absolute;
+        right: 20px;
+        font-size: 34px;
+    }
+
+    .rightColumn {
+        width: 100%;
+    }
+
+    .rightColRow {
+        padding: 10px;
+    }
+
+    .rightColumn img{
+        width: 80px;
+        height: 80px;
+    }
+
+    .rightColumn .rowOne .columnTwo h3 {
+        font-size: 25px;
+    }
+
+    .rightColumn .rowTwo .columnOne {
+        width: 130px;
+    }
+
+    .rightColumn .rowTwo .columnTwo {
+        padding-left: 20px;
+        width: auto;
+    }
+    
+    .columnOne {
+        padding-left: 0;
+        width: 80px;
+    }
+
+    .rightColumn .rowOne .columnTwo {
+        width: 80%;
+        padding-left: 40px;
+    }
+
+    .rightCol3Row {
+        width: 100%;
+        margin-top: 100px;
+    }
+}
+
+@media screen and (min-width: 771px) and (max-width: 992px) {
+
+    .viewAtSm {
+        display: none;
+    }
+    .dropdown {
+        display: none;
+    }
+    
+    .columnTwo {
+        margin-left: 0;
+        padding-left: 60px;
+    }
+
+    .rightCol3Row {
+        padding-top: 60px;
+    }
+    .costForTwo {
+        width: 250px;
+    }
+}
+
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+    .columnTwo {
+        margin-left: 0;
+    }
+    .viewAtSm {
+        display: none;
+    }
+    .dropdown {
+        display: none;
+    }
+} 
+
+@media screen and (min-width: 1201px){
+    .viewAtSm {
+        display: none;
+    }
+    .dropdown {
+        display: none;
+    }
+}
+
+
+#addForm,#updateForm{
+    border: solid 1px #ccc;
+    padding: 10px;
+    box-shadow: 0px 3px 6px #00000029;
+
+}
+
+#addForm div, #updateForm div{
+    border: solid 1px #ccc;
+    padding: 10px;
+    box-shadow: 0px 3px 6px #00000029;
+
+}
+
+#addForm {
+    background-color: #eee;
+}
+
+#updateForm {
+    background-color: yellow;
+}
