@@ -1,12 +1,67 @@
-
-
 import mongodb  from 'mongodb';
 let MongoClient = mongodb.MongoClient;
-
+import bcrypt from 'bcrypt';
 import express from 'express';
 const uri = "mongodb+srv://test:test@cluster0.mdmzq.mongodb.net/?retryWrites=true&w=majority";
+// const uri = "mongodb+srv://gowthami:gowthami@cluster0.7vwrl4g.mongodb.net/?retryWrites=true&w=majority";
 import xlsxFile  from 'read-excel-file/node';
- 
+import  jwt from 'jsonwebtoken';
+
+//var privateKey = fs.readFileSync('private.key');
+var privateKey = '0000'
+const saltRounds = 10;
+const timings = {
+    'BRF':'BRF',
+    'LCH':'LCH',
+    'DNR':'DNR',
+    'NGT':'NGT',
+    'SKS':'SKS',
+    'DRK':'DRK',
+};
+
+const locationCodes = {
+    'BLR':'BLR',
+    'MUM':'MUM',
+    'CHN':'CHN',
+    'AP':'AP'
+}
+
+const restuarants = [
+    {
+        'name':'Barbeque Nation',
+        'code':'BNQ',
+        'location_codes':[locationCodes.BLR,locationCodes.CHN],
+        'timing_codes':[timings.DNR,timings.LCH],
+        'cuisine':'Restuarant',
+        'cost':1000,
+        'overview':'Awesome for barbequee',
+        'images':['/images/breakfast-detail.png','/images/breakfast-detail.png'],
+        "address":"#32 Koramangala stree blr"
+    },
+    {
+        'name':'Cafe Masala',
+        'code':'CM',
+        'location_codes':[locationCodes.MUM,locationCodes.AP],
+        'timing_codes':[timings.BRF],
+        'cuisine':'Restuarant',
+        'cost':1000,
+        'overview':'Awesome for breakfast',
+        'images':['/images/breakfast-detail.png'],
+        "address":"#32 Koramangala stree blr"
+    },
+    {
+        'name':' Ragreza',
+        'code':'RZ',
+        'location_codes':[locationCodes.MUM,locationCodes.AP],
+        'timing_codes':[timings.BRF],
+        'cuisine':'Restuarant',
+        'cost':1000,
+        'overview':'Awesome for breakfast',
+        'images':['/images/breakfast-detail.png'],
+        "address":"#32 Koramangala stree blr"
+    },
+]
+
 const client = new MongoClient(uri,{
 });
 
@@ -26,13 +81,30 @@ client.connect(err =>{
 const db = client.db('test');
 client.close();
 
+
+function getHeaderFromToken(token) {
+    const decodedToken = jwt.decode(token, {
+     complete: true
+    });
+   
+    if (!decodedToken) {
+     throw new Parse.Error(Parse.Error.OBJECT_NOT_FOUND, `provided token does not decode as JWT`);
+    }
+   
+    return decodedToken;
+}
 // GETTING END POINTS
 app.get('/getFood', async(req, res) => {
-    console.log()
     try{
-        const limitGiven = 100;
+        console.log(req.headers.token)
+        const tokenHeaders = getHeaderFromToken(req.headers.token);
+        console.log(tokenHeaders);
+        const limitGiven = parseInt(req.query.limit) || 100;
+        const pageGiven = parseInt(req.query.page) || 1;
+        const itemsToSkip = (pageGiven-1)*limitGiven;
+
         const totalRecord = await (await db.collection('food').find({}).toArray()).length;
-        const foods = await db.collection('food').find({}).limit(limitGiven).toArray();
+        const foods = await db.collection('food').find({}).skip(itemsToSkip).limit(limitGiven).toArray();
         res.send({
             'status':200,
             'data': foods,
@@ -46,6 +118,128 @@ app.get('/getFood', async(req, res) => {
     }
 });
 
+app.get('/getQuickResurantFilters', async(req, res) => {
+    const quickResturantFilters = [
+        {
+            'timing':'Breakfast',
+            'code':timings.BRF,
+            'image':'/images/breakfast.png',
+            'description':'Start Your day with exclusive breakfast options'
+        },
+        {
+            'timing':'Lunch',
+            'code':timings.LCH,
+            'image':'/images/lunch.png',
+            'description':'Start Your day with exclusive breakfast options'
+        },
+        {
+            'timing':'Dinner',
+            'code':timings.DNR,
+            'image':'/images/dinner.png',
+            'description':'Start Your day with exclusive breakfast options'
+        },
+        {
+            'timing':'Snacks',
+            'code':timings.SKS,
+            'image':'/images/snacks.png',
+            'description':'Start Your day with exclusive breakfast options'
+        },
+        {
+            'timing':'Night',
+            'code':timings.NGT,
+            'image':'/images/night.png',
+            'description':'Start Your day with exclusive breakfast options'
+        },
+        {
+            'timing':'Drinks',
+            'code':timings.DRK,
+            'image':'/images/drink.png',
+            'description':'Start Your day with exclusive breakfast options'
+        }
+    ]
+    try{
+        res.send({
+            'status':200,
+            'data': quickResturantFilters,
+        })
+    } catch(e){
+        res.send({
+            'status':200,
+            'data': quickResturantFilters
+        })
+    }
+});
+
+app.get('/getLocations', async(req, res) => {
+    const locations = [
+        {
+            'name':'Bangalore',
+            'code':locationCodes.BLR
+        },
+        {
+            'name':'Chennai',
+            'code':locationCodes.CHN
+        },
+        {
+            'name':'Andra',
+            'code':locationCodes.AP
+        },
+        {
+            'name':'Mumbai',
+            'code':locationCodes.MUM
+        }
+
+    ]
+    try{
+        res.send({
+            'status':200,
+            'data': locations,
+        })
+    } catch(e){
+        res.send({
+            'status':200,
+            'data': locations
+        })
+    }
+});
+
+app.get('/getResturants', async(req, res) => {
+    const location_code = req.query.location_code;
+    const filtered_restuarants = restuarants.filter((item)=>{
+        return item.location_codes.includes(location_code)
+    })
+    try{
+        res.send({
+            'status':200,
+            'data': filtered_restuarants,
+        })
+    } catch(e){
+        res.send({
+            'status':200,
+            'data': filtered_restuarants
+        })
+    }
+});
+
+app.get('/getResturantDetails', async(req, res) => {
+    const resturantCode = req.query.code;
+    
+    const resrurantDetails = restuarants.find((item)=>{
+        return item.code == resturantCode;
+    })
+    try{
+        res.send({
+            'status':200,
+            'data': resrurantDetails,
+        })
+    } catch(e){
+        res.send({
+            'status':200,
+            'data': resrurantDetails
+        })
+    }
+});
+
 // i want : kya delete karna
 // unique identified -- automically aata hai har ek doc ..
 //_id 
@@ -55,8 +249,6 @@ app.get('/getFood', async(req, res) => {
 // requet.body.deleteId 
 //db.collection('food').deleteOne({_id:mongodb.Object()})
 //ORM - M
-
-
 // connect to db
 // c r d
 app.get('/filterFood', async(req, res) => {
@@ -74,8 +266,55 @@ app.post('/addFood',async(req,res)=>{
     res.send({
         'status':200,
         'message': 'Food item addded successfully',
-        'resultWeGot':result
+        'data':result.insertedId
     })
+});
+
+app.post('/signup',async(req,res)=>{
+    bcrypt.genSalt(saltRounds, function(err, salt) {
+        bcrypt.hash(req.body.password, salt, async function(err, hash) {
+            const result = await db.collection('user').insertOne({...req.body,'password':hash})
+            if(result.acknowledged){
+                res.send({
+                    'status':200,
+                    'message': 'user item addded successfully',
+                })
+            }
+            
+        });
+    });
+});
+
+app.post('/login',async(req,res)=>{
+    let result;
+    const user = await db.collection('user').find({'username':req.body.username}).limit(1).toArray();
+    if(user.length == 1){
+        bcrypt.compare(req.body.password, user[0].password, function(err, result) {
+            if(result){
+                const token = jwt.sign({'username':req.body.username}, 'secret');
+                console.log(token)
+                result = {
+                    'status':200,
+                    'data': result,
+                     'token':token
+                }
+                res.send({...result})
+            } else{
+                result = {
+                    'status':401,
+                    'data': 'Pawword mismatch'
+                }
+                res.send({...result})
+            }
+        });
+        
+    } else{
+        result = {
+            'status':401,
+            'data': 'No user found'
+        }
+        res.send({...result})
+    }    
 });
 
 app.post('/addFoods',async(req,res)=>{
@@ -87,10 +326,22 @@ app.post('/addFoods',async(req,res)=>{
         },
         'cuisine':{
             prop:'cuisine',
-            type:String
+            type:Array
         },
         'cost':{
             prop:'cost',
+            type:Number
+        },
+        'index':{
+            prop:'index',
+            type:Number
+        },
+        'description':{
+            prop:'index',
+            type:Number
+        },
+        'overview':{
+            prop:'index',
             type:Number
         }
     }
@@ -115,9 +366,10 @@ app.post('/addFoods',async(req,res)=>{
     })
 });
 
-
 app.delete('/deleteFood',async(req,res)=>{
-    const mongoObjectToDelete = mongodb.ObjectId(req.body.deleteId)
+    console.log(req.body.deleteId)
+    const mongoObjectToDelete = mongodb.ObjectId(req.body.deleteId);
+    console.log(mongoObjectToDelete)
     const foodCollection = db.collection('food');
     const result = await foodCollection.deleteOne({_id: mongoObjectToDelete})
     console.log(result)
@@ -132,7 +384,6 @@ app.delete('/deleteFood',async(req,res)=>{
             'message': 'DELETE OPERATION FAILED'
         });
     }
-    
 });
 
 app.delete('/deleteAllFood',async(req,res)=>{
